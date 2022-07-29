@@ -35,10 +35,11 @@ class App extends Component {
 	}
 
 	addItem = (name, salary) => {
-		if (name.length !== 0 && salary.length !== 0)
-		this.setState(({data}) => ({
-			data: [...data, {name: name, salary: salary, id: `${this.maxId++ + 1}`, increase: false}]
-		}))
+		if (name.length !== 0 && salary.length !== 0 && name.length < 50 && salary.length <= 7) {
+			this.setState(({data}) => ({
+				data: [...data, {name: name, salary: salary, id: `${this.maxId++ + 1}`, increase: false}]
+			}))
+		}
 	}
 
 	onIncreaseToggle = (id) => {
