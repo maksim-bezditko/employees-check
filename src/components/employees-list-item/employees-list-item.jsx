@@ -36,14 +36,14 @@ class EmployeesListItem extends Component {
 		return (
 			<li className={classNames(
 				'list-group-item', 
-				'd-flex', 
-				'justify-content-between', 
+				"d-flex",
+				"justify-content-between",
 				{ increase: increase}, 
 				{like: raised})}>
 
 				<span onClick={onRaisedToggle} className="list-group-item-label">{name}</span>
-				<input onChange={(e) => this.changeSalary(e)} type="text" className="list-group-item-input" defaultValue={this.state.salary}/>
-				<div className='d-flex justify-content-center align-items-center'>
+				<div className='d-flex justify-content-end align-items-center'>
+					<input onChange={(e) => this.changeSalary(e)} type="text" className="list-group-item-input" defaultValue={this.state.salary}/>
 					<button onClick={onIncreaseToggle} type="button"
 						className="btn-cookie btn-sm ">
 						<i className="fas fa-cookie"></i>

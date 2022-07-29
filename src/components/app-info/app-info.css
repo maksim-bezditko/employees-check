@@ -2,6 +2,17 @@
 	padding: 25px;
 	background-color: #3d5a80;
 	border-radius: 4px;
-	box-shadow: 15px 15px 30px rgba(0,0,0, .15);
+	box-shadow: 15px 15px 20px rgba(0,0,0, .15);
 	color: #fff;
+	width: 100%;
+}
+
+
+/* @media (max-width: 717) {} */
+.app-info h1 {
+	padding-bottom: 15px;
+}
+
+.app-info h2 {
+	font-size: 22px;
 }

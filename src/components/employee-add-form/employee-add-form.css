@@ -3,16 +3,35 @@
 	padding: 25px;
 	background-color: #3d5a80;
 	border-radius: 4px;
-	box-shadow: 15px 15px 30px rgba(0,0,0, .15);
+	box-shadow: 15px 15px 20px rgba(0,0,0, .15);
 	color: #fff;
 }
 
 .add-form {
 	margin-top: 20px;
+	display: flex;
+	justify-content: flex-start;
+}
+
+.inputs {
+	display: flex;
+	width: 80%;
+}
+
+.add-form button {
+	align-self: flex-start;
+}
+
+@media (max-width: 600px) {
+	.inputs {
+		flex-wrap: wrap;
+	}
+	.inputs input:not(:last-child) {
+		margin-bottom: 10px;
+	}
 }
 
 .add-form input {
-	width: 350px;
 	margin-right: 20px;
 }
 
@@ -27,3 +46,4 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+

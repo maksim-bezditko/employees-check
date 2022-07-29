@@ -23,11 +23,12 @@ class EmployeeAddForm extends Component {
             <div className="app-add-form">
                 <h3>Добавьте нового сотрудника</h3>
                 <form
-                    className="add-form d-flex"
+                    className="add-form"
                     onSubmit={(e) => {
                         e.preventDefault()
                         addItem(this.state.text, this.state.salary)
                     }}>
+                    <div className="inputs">
                     <input type="text"
                         className="form-control new-post-label"
                         placeholder="Как его зовут?" 
@@ -39,8 +40,9 @@ class EmployeeAddForm extends Component {
                         placeholder="З/П в $?" 
                         name="salary"
                         value={this.state.salary}
-                        onChange={(e) => this.onChange(e)}
-                        />
+                        onChange={(e) => this.onChange(e)}/>
+
+                    </div>
     
                     <button type="submit"
                         className="btn btn-outline-light">Добавить</button>

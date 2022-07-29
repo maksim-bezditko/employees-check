@@ -3,6 +3,21 @@
 	padding: 25px;
 	background-color: #3d5a80;
 	border-radius: 4px;
-	box-shadow: 15px 15px 30px rgba(0,0,0, .15);
+	box-shadow: 15px 15px 20px rgba(0,0,0, .15);
 	color: #fff;
+}
+
+@media (max-width: 377px) {
+	.search-panel {
+		padding: 15px;
+		padding-top: 25px;
+		padding-bottom: 25px;
+	}
+}
+@media (max-width: 355px) {
+	.search-panel {
+		padding: 10px;
+		padding-top: 25px;
+		padding-bottom: 25px;
+	}
 }

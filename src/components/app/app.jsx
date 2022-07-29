@@ -35,6 +35,7 @@ class App extends Component {
 	}
 
 	addItem = (name, salary) => {
+		if (name.length !== 0 && salary.length !== 0)
 		this.setState(({data}) => ({
 			data: [...data, {name: name, salary: salary, id: `${this.maxId++ + 1}`, increase: false}]
 		}))
@@ -106,30 +107,33 @@ class App extends Component {
 	render() {
 		return (
 			<React.StrictMode>
-				<div className="app">
-					<AppInfo 
-						total={this.state.data.length} 
-						awarded={this.state.data.reduce((acc, curr) => {
-							if (curr.increase) {
-								return acc + 1;
-							} 
-							return acc;
-						}, 0)}/>
-	
-					<div className="search-panel">
-						<SearchPanel
-							onSearchTermChange={this.changeSearchTerm}/>
-						<AppFilter 
-							changeFilterState={this.changeFilterState}/>
+				<div className="mycontainer">
+					<div className="app">
+						<AppInfo 
+							total={this.state.data.length} 
+							awarded={this.state.data.reduce((acc, curr) => {
+								if (curr.increase) {
+									return acc + 1;
+								} 
+								return acc;
+							}, 0)}/>
+		
+						<div className="search-panel">
+							<SearchPanel
+								onSearchTermChange={this.changeSearchTerm}/>
+							<AppFilter 
+								changeFilterState={this.changeFilterState}/>
+						</div>
+		
+						<EmployeesList 
+							data={this.returnDataOnFilter(this.returnCorrectData(this.state.searchTerm, this.state.data), this.state.filter)} 
+							deleteItemById={this.deleteItemById} onRaisedToggle={this.onRaisedToggle} 
+							onIncreaseToggle={this.onIncreaseToggle}/>
+		
+						<EmployeeAddForm addItem={this.addItem}/>
 					</div>
-	
-					<EmployeesList 
-						data={this.returnDataOnFilter(this.returnCorrectData(this.state.searchTerm, this.state.data), this.state.filter)} 
-						deleteItemById={this.deleteItemById} onRaisedToggle={this.onRaisedToggle} 
-						onIncreaseToggle={this.onIncreaseToggle}/>
-	
-					<EmployeeAddForm addItem={this.addItem}/>
 				</div>
+				
 			</React.StrictMode>
 		)
 	}
