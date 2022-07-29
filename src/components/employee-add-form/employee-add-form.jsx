@@ -27,6 +27,10 @@ class EmployeeAddForm extends Component {
                     onSubmit={(e) => {
                         e.preventDefault()
                         addItem(this.state.text, this.state.salary)
+                        this.setState(() => ({
+                            text: "",
+                            salary: ""
+                        }))
                     }}>
                     <div className="inputs">
                     <input type="text"
