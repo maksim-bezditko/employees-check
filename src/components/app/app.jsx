@@ -10,7 +10,7 @@ import { Component } from "react";
 class App extends Component {
 	constructor(props) {
 		super(props)
-		this.state= {
+		this.state = JSON.parse(localStorage.getItem("state")) || {
 			data: [
 				{name: "Max Smith", salary: "10000", id: "1", increase: false, raised: false},
 				{name: "Brad Franklin", salary: "7000", id: "2", increase: false, raised: false},
@@ -21,8 +21,13 @@ class App extends Component {
 				{name: "Mark Twain", salary: "4300", id: '7', increase: false, raised: false},
 				{name: "Dante Alighieri", salary: "5600", id: '8', increase: false, raised: false},
 			],
+			classes: JSON.parse(localStorage.getItem("classes")) || {
+				all: true,
+				rise: false,
+				bigSalary: false
+			},
 			searchTerm: "",
-			filter: "all"
+			filter: localStorage.getItem("filter") || "all"
 		}
 		this.maxId = this.state.data.length
 		this.initialData = this.state.data
@@ -32,6 +37,7 @@ class App extends Component {
 		this.setState(({data}) => ({
 			data: data.filter(item => item.id !== id)
 		}))
+		setTimeout(this.updateLocalStorage, 500)
 	}
 
 	addItem = (name, salary) => {
@@ -39,7 +45,9 @@ class App extends Component {
 			this.setState(({data}) => ({
 				data: [...data, {name: name, salary: salary, id: `${this.maxId++ + 1}`, increase: false}]
 			}))
+			setTimeout(this.updateLocalStorage, 500)
 		}
+
 	}
 
 	onIncreaseToggle = (id) => {
@@ -52,13 +60,7 @@ class App extends Component {
 			})
 			
 		}))
-	}
-
-	onSearch = (value) => {
-		this.setState(state => ({
-			search: value,
-			data: state.data.filter(item => item.name.startsWith(this.state.search))
-		}))
+		setTimeout(this.updateLocalStorage, 500)
 	}
 
 	onRaisedToggle = (id) => {
@@ -71,6 +73,7 @@ class App extends Component {
 			})
 			
 		}))
+		setTimeout(this.updateLocalStorage, 500)
 	}
 
 	returnCorrectData = (searchTerm, data) => {
@@ -85,6 +88,7 @@ class App extends Component {
 		this.setState(() => ({
 			searchTerm: newValue
 		}))
+		setTimeout(this.updateLocalStorage, 500)
 	}
 
 
@@ -92,17 +96,43 @@ class App extends Component {
 		if (filterName === "all") {
 			return data
 		} else if (filterName === "rise") {
-			return data.filter(item => item.raised === true)
+			return data.filter(item => item.raised)
 		} else {
 			return data.filter(item => item.salary > 1000)
 		}
 	}
 
-	changeFilterState = (newValue) => {
-		this.setState(() => ({
-			filter: newValue
+	changeSalary = (key, newValue) => {
+		this.setState(({data}) => ({
+			data: data.map(item => {
+				if (item.id === key) {
+					item.salary = newValue;
+					return item;
+				} else {
+					return item;
+				}
+			})
 		}))
+		setTimeout(this.updateLocalStorage, 500)
 	}
+
+	updateLocalStorage = () => {
+		localStorage.setItem("state", JSON.stringify(this.state))
+	}
+
+	changeClasses = (e) => {
+      const name = e.target.name;
+      this.setState(() => ({
+			classes: {
+				all: false,
+				rise: false,
+				bigSalary: false,
+				[name]: true,
+			},
+			filter: name
+      }))
+      setTimeout(this.updateLocalStorage, 500)
+   }
 
 
 	render() {
@@ -121,17 +151,21 @@ class App extends Component {
 		
 						<div className="search-panel">
 							<SearchPanel
-								onSearchTermChange={this.changeSearchTerm}/>
+								changeSearchTerm={this.changeSearchTerm}
+								searchValue={this.state.searchTerm}/>
 							<AppFilter 
-								changeFilterState={this.changeFilterState}/>
+								changeClasses={this.changeClasses}
+								{...this.state.classes}/>
 						</div>
 		
 						<EmployeesList 
 							data={this.returnDataOnFilter(this.returnCorrectData(this.state.searchTerm, this.state.data), this.state.filter)} 
 							deleteItemById={this.deleteItemById} onRaisedToggle={this.onRaisedToggle} 
-							onIncreaseToggle={this.onIncreaseToggle}/>
+							onIncreaseToggle={this.onIncreaseToggle}
+							changeSalary={this.changeSalary}/>
 		
-						<EmployeeAddForm addItem={this.addItem}/>
+						<EmployeeAddForm 
+							addItem={this.addItem}/>
 					</div>
 				</div>
 				

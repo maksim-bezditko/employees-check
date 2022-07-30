@@ -6,27 +6,18 @@ class EmployeesListItem extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			"salary": this.props.salary + "$"
+			"salary": parseInt(this.props.salary) || 0
 		}
 	}
 
-	// increase = () => {
-	// 	this.setState(({increase}) => ({
-	// 		increase: !increase
-	// 	}))
-	// }
-
-	// rise = () => {
-	// 	this.setState(({raised}) => ({
-	// 		raised: !raised
-	// 	}))
-	// }
-
 	changeSalary = (e) => {
+		if (e.target.value.length > 7) {
+			e.target.value = e.target.value.slice(0, 7)
+		}
 		this.setState(() => ({
-			"salary": e.target.value
+			"salary": parseInt(e.target.value) || 0
 		}))
-	
+		this.props.changeSalary(this.props.id, parseInt(e.target.value) || 0)
 	}
 
 
@@ -40,10 +31,10 @@ class EmployeesListItem extends Component {
 				"justify-content-between",
 				{ increase: increase}, 
 				{like: raised})}>
-
 				<span onClick={onRaisedToggle} className="list-group-item-label">{name}</span>
 				<div className='d-flex justify-content-end align-items-center'>
-					<input onChange={(e) => this.changeSalary(e)} type="text" className="list-group-item-input" defaultValue={this.state.salary}/>
+					<input onChange={this.changeSalary} type="text" className="list-group-item-input" value={this.state.salary}/>
+					<div className={classNames("dollar_sign", {dollar_sign_on_active: increase})}>$</div>
 					<button onClick={onIncreaseToggle} type="button"
 						className="btn-cookie btn-sm ">
 						<i className="fas fa-cookie"></i>
