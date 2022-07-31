@@ -31,16 +31,26 @@ class EmployeesListItem extends Component {
 				"justify-content-between",
 				{ increase: increase}, 
 				{like: raised})}>
-				<span onClick={onRaisedToggle} className="list-group-item-label">{name}</span>
+				<span 
+					onClick={onRaisedToggle} 
+					className="list-group-item-label">{name}</span>
 				<div className='d-flex justify-content-end align-items-center'>
-					<input onChange={this.changeSalary} type="text" className="list-group-item-input" value={this.state.salary}/>
+					<input 
+						onChange={this.changeSalary} 
+						type="text" 
+						className="list-group-item-input" 
+						value={this.state.salary}/>
 					<div className={classNames("dollar_sign", {dollar_sign_on_active: increase})}>$</div>
-					<button onClick={onIncreaseToggle} type="button"
+					<button 
+						onClick={onIncreaseToggle} 
+						type="button"
 						className="btn-cookie btn-sm ">
 						<i className="fas fa-cookie"></i>
 					</button>
 	
-					<button onClick={deleteItemById} type="button"
+					<button 
+						onClick={deleteItemById} 
+						type="button"
 						className="btn-trash btn-sm ">
 						<i className="fas fa-trash"></i>
 					</button>
